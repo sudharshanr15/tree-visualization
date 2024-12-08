@@ -4,13 +4,13 @@ module.exports = function (grunt) {
 
     watch: {
       files: ["Gruntfile.js", "./src/js/**/*.js"],
-      tasks: ["uglify", "concat"]
+      tasks: ["concat", "uglify", "obfuscator"]
     },
 
     uglify: {
       target: {
         files: {
-          "dest/js/main.min.js": ["dest/js/**/*.js"]
+          "dest/js/main.min.js": ["dest/js/main.js"]
         }
       }
     },
@@ -20,12 +20,21 @@ module.exports = function (grunt) {
         src: ["src/js/**/*.js"],
         dest: "dest/js/main.js"
       }
+    },
+
+    obfuscator: {
+      task: {
+        files: {
+          "dest/js/main.o.js": ["dest/js/main.min.js"]
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-contrib-concat");
+  grunt.loadNpmTasks("grunt-contrib-obfuscator");
 
-  grunt.registerTask("default", ["watch", "concat", "uglify"]);
+  grunt.registerTask("default", ["concat", "uglify", "obfuscator", "watch"]);
 };
