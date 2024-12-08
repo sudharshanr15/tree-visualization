@@ -10,7 +10,7 @@ module.exports = function (grunt) {
     uglify: {
       target: {
         files: {
-          "src/dest/js/main.min.js": ["dest/js/main.js"]
+          "src/dest/js/main.min.js": ["src/dest/js/main.js"]
         }
       }
     },
@@ -25,7 +25,7 @@ module.exports = function (grunt) {
     obfuscator: {
       task: {
         files: {
-          "src/dest/js/main.o.js": ["dest/js/main.min.js"]
+          "src/dest/js/main.o.js": ["src/dest/js/main.min.js"]
         }
       }
     }
