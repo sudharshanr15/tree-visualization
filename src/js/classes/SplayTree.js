@@ -83,6 +83,7 @@ class SplayTree{
         }
 
         this.root = current;
+        drawTree(this.toObject())
     }
 
 
@@ -189,4 +190,7 @@ class SplayTree{
         return null; // Not found
     }
 
+    toObject(){
+        return this.root.serialize()
+    }
 }
