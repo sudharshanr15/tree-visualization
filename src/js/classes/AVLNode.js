@@ -13,6 +13,7 @@ class AVLNode{
         obj.right = this.right ? this.right.serialize() : null;
         obj.data = this.data;
         obj.parent = this.parent;
+        obj.height = this.height;
 
         return obj;
     }

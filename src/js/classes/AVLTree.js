@@ -119,6 +119,7 @@ class AVLTree{
         if(children.parent == null){
             this.root = children;
         }
+        this.#update_tree_height();
     }
 
     #left_rotation(root) {
