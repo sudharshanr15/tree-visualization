@@ -8,6 +8,7 @@ class AVLTree{
 
         if(this.root == null){
             this.root = new_node;
+            drawTree(this.toObject())
             return;
         }
 
@@ -30,6 +31,7 @@ class AVLTree{
         }
         this.#update_tree_height();
         this.#balance_from_insertion(new_node);
+        drawTree(this.toObject())
     }
 
     inorder(){
@@ -170,4 +172,7 @@ class AVLTree{
         return new_root;
     }
 
+    toObject(){
+        return this.root.serialize()
+    }
 }

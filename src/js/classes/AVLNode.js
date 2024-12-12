@@ -6,4 +6,14 @@ class AVLNode{
         this.height = 1;
         this.parent = null;
     }
+
+    serialize(){
+        let obj = {};
+        obj.left = this.left ? this.left.serialize() : null;
+        obj.right = this.right ? this.right.serialize() : null;
+        obj.data = this.data;
+        obj.parent = this.parent;
+
+        return obj;
+    }
 }

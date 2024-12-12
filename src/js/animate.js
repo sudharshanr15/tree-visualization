@@ -6,67 +6,57 @@ canvas.setAttribute("width", canvas_width);
 canvas.setAttribute("height", canvas_height);
 const ctx = canvas.getContext("2d");
 
-let circles = [
-    {
-        id: 1,
-        x: canvas_width / 2,
-        y: 50,
-        radius: 30,
-        value: "5"
-    },
-    {
-        id: 2,
-        x: canvas_width / 2 - 100,
-        y: 75 * 2,
-        radius: 30,
-        value: "10",
-        parent: 1,
-    },
-    {
-        id: 3,
-        x: canvas_width / 2 + 100,
-        y: 75 * 2,
-        radius: 30,
-        value: "15",
-        parent: 1
-    },
-    {
-        id: 4,
-        x: canvas_width / 2 - 200,
-        y: 75 * 3,
-        radius: 30,
-        value: "20",
-        parent: 2,
-    },
-];
-
 let initial_config = {
-    x: canvas_width / 2,
-    y: 75,
+    x: 500,
+    y: 100,
     radius: 30,
 };
 
 function drawTree(nodes){
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the previous frame
-    drawNodes(initial_config, nodes)
+    console.log("---------------------")
+    drawNodes(initial_config, nodes, 1, initial_config.x)
+    console.log("---------------------")
 }
 
-function drawNodes(initial_config, nodes, level = 1, position=0){
+function drawNodes(config, nodes, level = 1, start_position){
 
     if(nodes == null){
         return
     }
 
-    drawCircle(initial_config, nodes, level, position)
+    drawCircle(config, nodes, level, 0)
+    console.log("draw: ", nodes.data, config.x, start_position)
 
     level++
-    let left_config = {...initial_config};
-    left_config.x = left_config.x - (left_config.x / 2)
-    drawNodes(left_config, nodes.left, level, 0)
+    start_position /= 2
 
-    let right_config = {...initial_config};
-    right_config.x = right_config.x + (right_config.x / 2)
-    drawNodes(right_config, nodes.right, level, 1)
+    if(nodes.left){
+        let left_config = {...config};
+        left_config.x = left_config.x - start_position
+        console.log("going left: ", nodes.left)
+        ctx.beginPath();
+        ctx.moveTo(config.x, config.y * (level-1) + config.radius);
+        ctx.lineTo(left_config.x, config.y * level - config.radius)
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+        ctx.closePath()
+        drawNodes(left_config, nodes.left, level, start_position)
+    }
+
+    if(nodes.right){
+        let right_config = {...config};
+        right_config.x = right_config.x + start_position
+        ctx.beginPath();
+        ctx.moveTo(config.x, config.y * (level-1) + config.radius);
+        ctx.lineTo(right_config.x, config.y * level - config.radius)
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+        ctx.closePath()
+        console.log("going right: ", nodes.right)
+        drawNodes(right_config, nodes.right, level, start_position)
+    }
+
 }
 
 function drawCircle(config, circle, level, postition) {
