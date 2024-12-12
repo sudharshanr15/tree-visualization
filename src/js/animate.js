@@ -6,16 +6,20 @@ canvas.setAttribute("width", canvas_width);
 canvas.setAttribute("height", canvas_height);
 const ctx = canvas.getContext("2d");
 
-let initial_config = {
-    x: 500,
-    y: 100,
-    radius: 30,
-};
+function getConfig(){
+    let canvas = document.querySelector("#tree");
+    return {
+        x: canvas.getAttribute("width") / 2,
+        y: 100,
+        radius: 30,
+    }
+}
 
 function drawTree(nodes){
+    let config = getConfig();
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the previous frame
     console.log("---------------------")
-    drawNodes(initial_config, nodes, 1, initial_config.x)
+    drawNodes(config, nodes, 1, config.x)
     console.log("---------------------")
 }
 
